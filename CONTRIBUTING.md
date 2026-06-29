@@ -43,7 +43,7 @@ There's no automated test suite. To exercise end-to-end:
 scripts/test-announce.sh
 ```
 
-That fires both "ready" and "waiting" announcements, bypassing all gates (voice/notify on, no quiet hours, no focus check).
+That fires both "ready" and "waiting" announcements, bypassing the enable flags, quiet hours, and the focus check. (Active mutes still apply — run `/voice-unmute --global` first if you set one.)
 
 ### Per-hook synthetic payloads
 
@@ -65,6 +65,8 @@ echo '{"cwd":"/tmp/foo","session_id":"abc12345","message":"needs permission","tr
   | scripts/on-notification.sh
 ```
 
+> **Note on transcript shape:** real Claude Code transcripts wrap each record as `{"type":"assistant","message":{"role":"assistant","content":[...]}}`. The `last_assistant_text` helper accepts both that wrapped form and the flat shape shown above, so either works for testing.
+
 To exercise `on-stop.sh` with a shorter debounce (default is 10s):
 
 ```bash
@@ -81,7 +83,7 @@ Also worth running before submitting a PR:
 claude plugin validate .
 ```
 
-Should pass clean. Treat warnings as blockers.
+Should pass clean. Investigate every warning before opening the PR — most indicate a real problem worth fixing.
 
 ## Changes that need extra care
 
@@ -107,7 +109,7 @@ Pre-PR checklist:
 
 - [ ] `claude plugin validate .` passes
 - [ ] `scripts/test-announce.sh` still fires two banners + voice
-- [ ] Version bump if user-visible behavior changes (semver: minor for new features, patch for fixes)
+- [ ] Version bump in both `plugin.json` AND `marketplace.json` if user-visible behavior changes — new command, new flag, changed default. Semver: minor for new features, patch for fixes.
 - [ ] CHANGELOG.md entry under `[Unreleased]`
 - [ ] Docs updated if a flag, command, or default changed
 

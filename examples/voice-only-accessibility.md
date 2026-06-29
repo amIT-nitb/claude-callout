@@ -1,10 +1,10 @@
 # Voice-only accessibility setup
 
-**Goal:** have Claude speak everything aloud regardless of focus — so a user who relies on audio cues (visually impaired developer, multitasker keeping eyes elsewhere) gets the same information stream as a sighted user gets from the banner.
+**Goal:** disable the plugin's default focus-skip behavior (which suppresses voice when your terminal/IDE is the foreground app on macOS) so Claude speaks everything aloud regardless of focus — for visually impaired developers, multitaskers keeping eyes elsewhere, or anyone who prefers audio-first cues.
 
 ## Use case
 
-By default `claude-callout` suppresses voice when the terminal/IDE is the foreground app — **on macOS only**, where the plugin can detect focus via `osascript`. On Linux and Windows the focus check is a no-op, so voice always announces. For users who rely on audio cues on macOS, the `voice-when-focused` flag opts back in to speaking regardless of focus.
+By default `claude-callout` suppresses voice when the terminal/IDE is the foreground app — **on macOS only**, where the plugin can detect focus via `osascript`. On Linux and Windows the focus check is skipped (not implemented), so voice always announces. For users who rely on audio cues on macOS, the `voice-when-focused` flag opts back in to speaking regardless of focus.
 
 ## Commands
 
@@ -32,7 +32,7 @@ The voice message stays terse ("Claude ready" / "Claude waiting"). The tool summ
 
 | Need | Command |
 |---|---|
-| Voice everywhere on this project only | `/voice-when-focused-on` (drop `--global`) |
+| Speak regardless of focus, scoped to this project only | `/voice-when-focused-on` (drop `--global`) |
 | Change the macOS voice / speech rate | Open **System Settings → Accessibility → Spoken Content** → adjust **System voice** and **Speaking rate**. The plugin's `say_text` shells out to plain `say`, which respects this system setting. Preview voices with `say -v ?` in your shell. |
 | Set quiet hours so voice doesn't fire overnight | `export CLAUDE_VOICE_QUIET="22-7"` in your shell rc |
 | Pair with VoiceOver for full screen-reader stack | Enable in System Settings → Accessibility → VoiceOver — independent of this plugin |

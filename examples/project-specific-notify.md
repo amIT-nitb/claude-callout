@@ -29,7 +29,7 @@ And inside Claude Code there:
 /notify-on           # this project only
 ```
 
-Done. Every other CC session stays silent; this one repo speaks + banners. The project-specific state lives in `<project>/.claude-callout/` — see the "Sharing across collaborators" section below for what to do with that directory.
+Done. Every other Claude Code session stays silent; this one repo speaks + banners. The project-specific state lives in `<project>/.claude-callout/` — see the "Sharing across collaborators" section below for what to do with that directory.
 
 ## What `/voice-status` shows in each scope
 

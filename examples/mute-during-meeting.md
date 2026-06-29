@@ -14,7 +14,7 @@ From inside Claude Code:
 /voice-mute 30m --global
 ```
 
-That's it. Both voice and OS notifications go silent **user-wide** for 30 minutes — every Claude Code session on this Mac stays quiet. After the window expires, the mute file is auto-cleaned the next time a hook fires, so there's no "did I forget to turn it back on?" failure mode.
+That's it. Both voice and OS notifications go silent **user-wide** for 30 minutes — every Claude Code session on this machine stays quiet. After the window expires, the mute file is auto-cleaned the next time a hook fires, so there's no "did I forget to turn it back on?" failure mode.
 
 ## Variations
 
