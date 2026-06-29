@@ -43,7 +43,7 @@ There's no automated test suite. To exercise end-to-end:
 scripts/test-announce.sh
 ```
 
-That fires both "ready" and "waiting" announcements, bypassing the enable flags, quiet hours, and the focus check. (Active mutes still apply — run `/voice-unmute --global` first if you set one.)
+That fires both "ready" and "waiting" announcements, bypassing all gates — the enable flags, quiet hours, the focus check, and any active mute. If you want the test to respect mutes, run `/voice-unmute --global` first; otherwise it will fire regardless.
 
 ### Per-hook synthetic payloads
 
