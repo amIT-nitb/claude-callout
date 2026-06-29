@@ -1,0 +1,43 @@
+# Mute during a meeting
+
+**Goal:** silence both voice and OS notifications for a fixed window — say, a 30-min standup — and have things auto-restore afterward, no manual cleanup needed.
+
+## Use case
+
+You're heading into a meeting and Claude Code is running a long task in another terminal. You don't want the banners popping up during your call, but you also don't want to forget to turn things back on after.
+
+## Commands
+
+From inside Claude Code:
+
+```
+/voice-mute 30m
+```
+
+That's it. Both voice and OS notifications go silent **user-wide** for 30 minutes. After the window expires, the mute file is auto-cleaned on the next gating check — there's no "did I forget to turn it back on?" failure mode.
+
+## Variations
+
+| Need | Command |
+|---|---|
+| Mute everywhere for 2 hours | `/voice-mute 2h --global` |
+| Mute only the current project | `/voice-mute 30m` (project scope is default) |
+| Cancel early (meeting ended sooner) | `/voice-unmute` (project) or `/voice-unmute --global` |
+| Mute via shell instead of slash command | `claude-callout mute 30m --global` |
+
+## Verifying
+
+While the mute is active, `/voice-status` will show:
+
+```
+Voice:               off (muted (user))
+Notifications:       off (muted (user))
+…
+Mute:                user scope, 28m 12s remaining
+```
+
+After the window expires, run `/voice-status` again — the Mute row disappears and Voice/Notifications report their normal values.
+
+## How it works under the hood
+
+A single-line file at `~/.claude/callout/mute-until` (or `<project>/.claude-callout/mute-until`) holds an epoch-seconds expiry. Every gating check compares `now` against that timestamp. Expired files are removed on read.
