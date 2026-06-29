@@ -4,7 +4,7 @@
 
 ## Use case
 
-By default `claude-callout` suppresses voice when the terminal/IDE is the foreground app, on the assumption that a user *at the keyboard* will see the banner. For accessibility, you may need the spoken cue regardless of focus.
+By default `claude-callout` suppresses voice when the terminal/IDE is the foreground app — **on macOS only**, where the plugin can detect focus via `osascript`. On Linux and Windows the focus check is a no-op, so voice always announces. For users who rely on audio cues on macOS, the `voice-when-focused` flag opts back in to speaking regardless of focus.
 
 ## Commands
 
@@ -16,7 +16,7 @@ User-wide, one-time setup:
 /notify-on --global                # keep banners on too (don't lose them)
 ```
 
-## What changes
+## What changes (macOS)
 
 | Event | Before | After |
 |---|---|---|
@@ -24,7 +24,9 @@ User-wide, one-time setup:
 | Terminal focused, Claude needs permission | banner only | banner **and** spoken "Claude waiting" |
 | Terminal not focused (you walked away) | banner + voice | banner + voice (unchanged) |
 
-The voice message stays terse ("Claude ready" / "Claude waiting") — only ~1 second of speech. The tool summary ("Bash×4, Edit×2") and the quoted snippet of what Claude was asking only go to the banner body — they're not spoken, by design, to keep voice ~1 second.
+On Linux and Windows, voice already speaks regardless of focus (the focus check is macOS-only), so this flag is a no-op there.
+
+The voice message stays terse ("Claude ready" / "Claude waiting"). The tool summary ("Bash×4, Edit×2") and the quoted snippet of what Claude was asking go to the banner body only — they're not spoken, by design, to keep voice brief.
 
 ## Variations
 
