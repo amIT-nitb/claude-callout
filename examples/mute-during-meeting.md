@@ -11,19 +11,19 @@ You're heading into a meeting and Claude Code is running a long task in another 
 From inside Claude Code:
 
 ```
-/voice-mute 30m
+/voice-mute 30m --global
 ```
 
-That's it. Both voice and OS notifications go silent **user-wide** for 30 minutes. After the window expires, the mute file is auto-cleaned on the next gating check — there's no "did I forget to turn it back on?" failure mode.
+That's it. Both voice and OS notifications go silent **user-wide** for 30 minutes — every Claude Code session on this Mac stays quiet. After the window expires, the mute file is auto-cleaned the next time a hook fires, so there's no "did I forget to turn it back on?" failure mode.
 
 ## Variations
 
 | Need | Command |
 |---|---|
 | Mute everywhere for 2 hours | `/voice-mute 2h --global` |
-| Mute only the current project | `/voice-mute 30m` (project scope is default) |
-| Cancel early (meeting ended sooner) | `/voice-unmute` (project) or `/voice-unmute --global` |
-| Mute via shell instead of slash command | `claude-callout mute 30m --global` |
+| Mute only the current project | `/voice-mute 30m` (project scope is the default when `--global` is omitted) |
+| Cancel early (meeting ended sooner) | `/voice-unmute --global` (or `/voice-unmute` for project scope) |
+| Mute via shell instead of slash command | `claude-callout mute 30m --global` (shell — requires symlink or use full path, see [README](../README.md#enable)) |
 
 ## Verifying
 
@@ -36,7 +36,7 @@ Notifications:       off (muted (user))
 Mute:                user scope, 28m 12s remaining
 ```
 
-After the window expires, run `/voice-status` again — the Mute row disappears and Voice/Notifications report their normal values.
+After the window expires, run `/voice-status` again — the Mute row no longer shows and Voice/Notifications report their normal values. The `mute-until` file itself is removed the next time a hook fires (Stop, Notification, etc.), not at the `/voice-status` check.
 
 ## How it works under the hood
 
