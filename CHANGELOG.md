@@ -6,6 +6,18 @@ The plugin was originally published as **`claude-voice-notify`** and renamed to 
 
 ## [Unreleased]
 
+## [0.5.2] — 2026-06-29
+
+Documentation-only release. No behavioral changes — same hook scripts, same gating logic, same dispatch.
+
+### Added
+- `CONTRIBUTING.md` — project layout, conventions, manual-test recipes (including per-hook synthetic payloads that actually exercise `last_assistant_text` and `tool_summary`), and pre-PR checklist.
+- `examples/` directory with three real-world recipes: `mute-during-meeting.md`, `voice-only-accessibility.md`, `project-specific-notify.md`, plus an index.
+- Top-level README link to the `examples/` folder.
+
+### Fixed
+- Several documentation accuracy issues caught during a real-machine audit of every command quoted in `examples/`: `/voice-mute` default scope, mute-file auto-cleanup lifecycle, macOS-only focus check, slash-vs-shell fence types, and the `test-announce.sh` bypass semantics (it bypasses every gate including active mutes).
+
 ## [0.5.1] — 2026-06-05
 
 ### Fixed
@@ -88,7 +100,8 @@ The plugin was originally published as **`claude-voice-notify`** and renamed to 
 - Stop debounce, focus skip, quiet hours.
 - Slash commands for `/voice-on`, `/voice-off`, `/notify-on`, `/notify-off`, `/voice-status`, `/voice-test`.
 
-[Unreleased]: https://github.com/amIT-nitb/claude-callout/compare/v0.5.1...HEAD
+[Unreleased]: https://github.com/amIT-nitb/claude-callout/compare/v0.5.2...HEAD
+[0.5.2]: https://github.com/amIT-nitb/claude-callout/releases/tag/v0.5.2
 [0.5.1]: https://github.com/amIT-nitb/claude-callout/releases/tag/v0.5.1
 [0.5.0]: https://github.com/amIT-nitb/claude-callout/releases/tag/v0.5.0
 [0.4.1]: https://github.com/amIT-nitb/claude-callout/releases/tag/v0.4.1
