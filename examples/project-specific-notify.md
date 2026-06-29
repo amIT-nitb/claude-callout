@@ -8,23 +8,28 @@ You have a dozen repos on your machine. Most don't need notifications — you're
 
 ## Commands
 
-One-time setup:
+One-time setup. From inside Claude Code:
 
-```bash
-# Step 1: globally disable everything (quiet by default)
+```
+# Step 1: disable everything user-wide (quiet across all projects)
 /voice-off --global
 /notify-off --global
 ```
 
-Then inside the *one* repo you care about:
+Then `cd` into the *one* repo you care about (shell):
 
 ```bash
 cd ~/code/the-noisy-project
+```
+
+And inside Claude Code there:
+
+```
 /voice-on            # this project only
 /notify-on           # this project only
 ```
 
-Done. Every other CC session stays silent; this one repo speaks + banners.
+Done. Every other CC session stays silent; this one repo speaks + banners. The project-specific state lives in `<project>/.claude-callout/` — see the "Sharing across collaborators" section below for what to do with that directory.
 
 ## What `/voice-status` shows in each scope
 
@@ -69,4 +74,4 @@ git add -f .claude-callout/voice-enabled .claude-callout/notify-enabled
 git commit -m "Always notify in this repo (long test runs)"
 ```
 
-The `-f` force-add overrides any `.gitignore` rule. Now everyone who clones the repo inherits the same notification behavior.
+The `-f` force-add is needed if your repo's `.gitignore` excludes `.claude-callout/` (recommended — see this plugin's own `.gitignore`). Once committed, everyone who clones the repo inherits the same notification behavior.
