@@ -20,18 +20,18 @@ User-wide, one-time setup:
 
 | Event | Before | After |
 |---|---|---|
-| Terminal focused, Claude finishes | banner only (voice suppressed) | banner **and** spoken "Claude ready — Bash×4, Edit×2" |
+| Terminal focused, Claude finishes | banner only (voice suppressed) | banner **and** spoken "Claude ready" |
 | Terminal focused, Claude needs permission | banner only | banner **and** spoken "Claude waiting" |
 | Terminal not focused (you walked away) | banner + voice | banner + voice (unchanged) |
 
-The voice message stays terse ("Claude ready" / "Claude waiting") — only ~1 second of speech. The detail is in the banner, which a screen reader can pick up if it's set as the foreground OS event.
+The voice message stays terse ("Claude ready" / "Claude waiting") — only ~1 second of speech. The tool summary ("Bash×4, Edit×2") and the quoted snippet of what Claude was asking only go to the banner body — they're not spoken, by design, to keep voice ~1 second.
 
 ## Variations
 
 | Need | Command |
 |---|---|
 | Voice everywhere on this project only | `/voice-when-focused-on` (drop `--global`) |
-| Use a faster voice (macOS) | `defaults write com.apple.speech.voice.prefs SelectedVoiceCreator -int 1953069538` (system setting, not plugin-specific) |
+| Change the macOS voice / speech rate | Open **System Settings → Accessibility → Spoken Content** → adjust **System voice** and **Speaking rate**. The plugin's `say_text` shells out to plain `say`, which respects this system setting. Preview voices with `say -v ?` in your shell. |
 | Set quiet hours so voice doesn't fire overnight | `export CLAUDE_VOICE_QUIET="22-7"` in your shell rc |
 | Pair with VoiceOver for full screen-reader stack | Enable in System Settings → Accessibility → VoiceOver — independent of this plugin |
 
