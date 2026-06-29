@@ -16,3 +16,9 @@ PUBLISH.md
 
 # Author-only ready-to-paste submission text — not published
 SUBMISSIONS.md
+
+# Local screenshots for submissions — not published
+claude-notification-screenshot/
+*.png
+*.jpg
+*.jpeg
