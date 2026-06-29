@@ -43,14 +43,37 @@ There's no automated test suite. To exercise end-to-end:
 scripts/test-announce.sh
 ```
 
-That fires both "ready" and "waiting" announcements, bypassing all gates. Use `CLAUDE_VOICE_DEBOUNCE=2` when iterating on `on-stop.sh` so you don't wait 10s every cycle.
+That fires both "ready" and "waiting" announcements, bypassing all gates (voice/notify on, no quiet hours, no focus check).
 
-To exercise an individual hook with a synthetic payload:
+### Per-hook synthetic payloads
+
+To exercise `on-notification.sh` directly:
 
 ```bash
+echo '{"cwd":"/tmp/foo","session_id":"abc12345","message":"needs permission"}' \
+  | scripts/on-notification.sh
+```
+
+To also exercise the transcript-snippet code path (`last_assistant_text`), create a minimal transcript first:
+
+```bash
+cat > /tmp/transcript.jsonl <<'EOF'
+{"role":"user","content":[{"type":"text","text":"run tests"}]}
+{"role":"assistant","content":[{"type":"text","text":"Let me run the test suite to verify"}]}
+EOF
 echo '{"cwd":"/tmp/foo","session_id":"abc12345","message":"needs permission","transcript_path":"/tmp/transcript.jsonl"}' \
   | scripts/on-notification.sh
 ```
+
+To exercise `on-stop.sh` with a shorter debounce (default is 10s):
+
+```bash
+echo '{"cwd":"/tmp/foo","session_id":"abc12345"}' \
+  | CLAUDE_VOICE_DEBOUNCE=2 scripts/on-stop.sh
+# Wait ~2 seconds for the watcher to fire from a detached subshell.
+```
+
+### Validate the manifest
 
 Also worth running before submitting a PR:
 
