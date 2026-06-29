@@ -160,6 +160,14 @@ export CLAUDE_VOICE_DEBOUNCE=20    # seconds to wait after Stop (default: 10)
 
 The `Notification` event for **permission prompts and other non-idle messages** always fires immediately — when Claude needs your input, you should know now.
 
+## Examples
+
+Real-world recipes are in [`examples/`](examples/):
+
+- [Mute during a meeting](examples/mute-during-meeting.md) — silence everything for a fixed window, auto-restore after.
+- [Voice-only accessibility setup](examples/voice-only-accessibility.md) — speak everything aloud, even when the terminal is focused.
+- [Project-specific notifications only](examples/project-specific-notify.md) — quiet at the user level, loud in one specific repo.
+
 ## Persistent, stackable notifications
 
 The plugin asks the OS for **persistent** (sticky-until-dismissed) and **stackable** (one banner per event, not "the latest replaces the old") notifications. It works out of the box with the OS's built-in tools, and gets better with one optional install.
